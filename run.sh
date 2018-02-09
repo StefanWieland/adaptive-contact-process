@@ -17,6 +17,6 @@ g++ -Wall -g -std=c++11 -O3 -o sis sis.cpp -lm -lgsl -lgslcblas -fopenmp
 #TMAX=simulated time
 #RUNS=number of runs
 #EMAX=number of maxixum tries for rewiring procedure
-#KMAX=maximum consider degree
+#KMAX=maximum considered degree
 #PATH=path for data files
 
