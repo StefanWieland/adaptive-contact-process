@@ -1,6 +1,6 @@
 #!/bin/bash
 
-g++ -Wall -g -std=c++11 -O3 -o sis sis.cpp -lm -lgsl -lgslcblas -fopenmp
+g++ -Wall -g -std=c++11 -O3 -o adaptiveContact adaptiveContact.cpp -lm -lgsl -lgslcblas -fopenmp
 ./sis 1000 5000 500 1 1 1 1000 100 1000 50 'test.dat'
 
 #./sis N K I P R W TMAX RUNS EMAX KMAX PATH
