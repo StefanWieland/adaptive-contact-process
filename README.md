@@ -5,9 +5,6 @@ This is the code used in Wieland et al., Phys. Rev. E 91, 060801(R) – 2015. It
 
 The output file contains, in its first line, the averaged values of the stationary densities of infected (I-)nodes and of links connecting susceptible (S-)nodes with I-nodes, as well at the computation time. The subsequent lines sample steady-state P{S,I}(x,y) and have 4 columns: 
 
-1st: x
-2st: y
-3rd: P{S}(x,y)
-4th: P{I}(x,y).
+1st: x, 2nd: y, 3rd: P{S}(x,y), 4th: P{I}(x,y)
 
 Averaging over multiple realizations of the stochastic process yields smooth degree distributions. In each run, on starts with a randomly configured Erdos-Renyi graph with a fixed number of initial I-nodes and then lets the coevolutionary dynamics run its course until a steady state is reached (rule of thumb: computed time >= 1000). The code uses multithreading via OpenMP, maximizing the number of threads.  
