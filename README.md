@@ -10,4 +10,4 @@ The output file contains, in its first line, the averaged values of the stationa
 3rd: P{S}(x,y)
 4th: P{I}(x,y).
 
-For better averaging, multiple runs are possible. In each run, on starts with a randomly configured Erdos-renyi graph with a given number of initial I-nodes and then lets the coevolutionary dynamics run its course until a steady state is reached (rule of thumb: computed time >= 1000). The code uses multithreading via OpenMP, maximimizing the number of threads.  
+For better averaging, multiple runs are possible. In each run, on starts with a randomly configured Erdos-renyi graph with a given number of initial I-nodes and then lets the coevolutionary dynamics run its course until a steady state is reached (rule of thumb: computed time >= 1000). The code uses multithreading via OpenMP, maximizing the number of threads.  
