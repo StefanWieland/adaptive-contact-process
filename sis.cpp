@@ -17,8 +17,8 @@ int main(int ac,char **av)
 	std::string type=av[11];		//file name 
 //-------------------------------------------------------------
 
-	long int varIglobal=0;			//global average I-state
-	long int varSIglobal=0;			//global average SI-link
+	long int varIglobal=0;			//counter for averaging [I] (densities of I-nodes)
+	long int varSIglobal=0;			//counter for averaging [SI] (densitites of SI-links)
 	double Deg[KMAX][KMAX][2]={};		//joint degree distribution Deg[S-neighbors][I-neighbors][P_S,P_I] 
 
 //------------------prepare status bar visualization----------------
@@ -30,7 +30,7 @@ int main(int ac,char **av)
 
 	double t0=time(0);			//time stamp;different rng seeds for different program executions 
 
-	#pragma omp parallel for reduction(+:varIglobal,varSIglobal)
+	#pragma omp parallel for reduction(+:varIglobal,varSIglobal)//
 	for(long int run=0;run<RUNS;++run)			//averaging over runs
 	{
 		long int varI=0,varSI=0;			//propensity counters
@@ -41,13 +41,13 @@ int main(int ac,char **av)
 		std::vector<netNode> net(N);			//declaring network vector
 		stateInitialization(net,I0,&rng);		//initialize with I0 I-nods	
 		ErdosRenyi(net,K,&rng);				//choose Erdos-Renyi graph
-//		all2allNetwork(net);				//all-to-all graph
-		countMoments(net,varI,varSI);			//count propensities for Gillespie algorithm
+		countMoments(net,varI,varSI);			//count necessary densities for Gillespie algorithm
 //		printNetwork(net);				//print network
 
-		double t=0;					//system time		
+		double t=0;					//initialize system time		
 
-		while(t<TMAX && varI>0 && varSI>0)//simulate stochastic trajectory with Gillespie algorithm, stop if no I-nodes or SI-links
+		//simulate stochastic trajectory with Gillespie algorithm.stop if time's up,no I-nodes or no SI-links left.
+		while(t<TMAX && varI>0 && varSI>0)
 		{
 			double process=gsl_rng_uniform(rng)*(R*varI+(W+P)*varSI); //weight
 
@@ -66,7 +66,7 @@ int main(int ac,char **av)
 					if(W!=0)
 						rewiring(net,varI,varSI,&rng,TRIESMAX);
 		};
-		#pragma omp atomic	//updating propensity averages
+		#pragma omp atomic	//updating density counters
 		varIglobal+=varI;
 		#pragma omp atomic
 		varSIglobal+=varSI;
@@ -120,7 +120,8 @@ int main(int ac,char **av)
 	(void)time(&t2);					//2nd flag of computation time 
 	std::fstream data;
 	data.open((type).c_str(), std::ios::out);		//general data
-	data<<"# average [I]: "<<double(varIglobal)/N/RUNS<<", average [SI]: "<<double(varSIglobal)/N/RUNS<<", computation time: "<<t2-t1<<"s\n";
+	data<<"# average [I]: "<<double(varIglobal)/N/RUNS<<", average [SI]: "<<double(varSIglobal)/N/RUNS
+	<<", computation time: "<<t2-t1<<"s\n";
 	for(long int x=0;x<KMAX;++x)					//browse S-neighbors
 	{
 		for(long int y=0;y<KMAX;++y)				//browse I-neighbors
