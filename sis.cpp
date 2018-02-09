@@ -120,8 +120,7 @@ int main(int ac,char **av)
 	(void)time(&t2);					//2nd flag of computation time 
 	std::fstream data;
 	data.open((type).c_str(), std::ios::out);		//general data
-	data<<"# average [I]: "<<double(varIglobal)/N/RUNS<<", average [SI]: "<<double(varSIglobal)/N/RUNS
-	<<", computation time: "<<t2-t1<<"s\n";
+	data<<"# average [I]: "<<double(varIglobal)/N/RUNS<<", average [SI]: "<<double(varSIglobal)/N/RUNS<<", computation time: "<<t2-t1<<"s\n";
 	for(long int x=0;x<KMAX;++x)					//browse S-neighbors
 	{
 		for(long int y=0;y<KMAX;++y)				//browse I-neighbors
