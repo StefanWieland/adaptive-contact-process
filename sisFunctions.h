@@ -111,14 +111,6 @@ void ErdosRenyi(std::vector<netNode> &net,long int k,gsl_rng **rng)//construct r
     };
 }
 
-void all2allNetwork(std::vector<netNode> &net)		//setting up fully connected graph
-{
-	const long int n=net.size();
-	for(auto i=0;i<n;++i)
-		for(long int j=i+1;j<n;++j)
-	 	       addLink(net,i,j);
-}
-
 void countMoments(std::vector<netNode> &net, long int &varI,  long int &varSI)//counting number of I-nodes and SI-links
 {
 	varI=0;varSI=0;				//propensity counters
